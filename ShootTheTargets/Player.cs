@@ -45,6 +45,10 @@ public class Player
         Pos += _speed * Game1.Delta * direction;
     }
 
+    /*
+     * Don't use async void in your code!
+     * This game is meant to demonstrate the InputHandler library, not define the most robust cooldown mechanism.
+     */
     private async void Shoot()
     {
         if (_didShoot) return;
