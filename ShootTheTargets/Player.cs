@@ -21,33 +21,13 @@ public class Player
 
         ActionMap = new Dictionary<string, Action>
         {
-            { "Up", MoveUp },
-            { "Down", MoveDown },
-            { "Left", MoveLeft },
-            { "Right", MoveRight },
+            { "Up", () => DoMovement(new Vector2(0, -1)) },
+            { "Down", () => DoMovement(new Vector2(0, 1)) },
+            { "Left", () => DoMovement(new Vector2(-1, 0)) },
+            { "Right", () => DoMovement(new Vector2(1, 0)) },
             { "MoveAnalog", MoveAnalog },
             { "PrimaryAction", Shoot }
         };
-    }
-
-    private void MoveUp()
-    {
-        DoMovement(Vector2.Normalize(new Vector2(0, -1)));
-    }
-
-    private void MoveDown()
-    {
-        DoMovement(Vector2.Normalize(new Vector2(0, 1)));
-    }
-
-    private void MoveLeft()
-    {
-        DoMovement(Vector2.Normalize(new Vector2(-1, 0)));
-    }
-
-    private void MoveRight()
-    {
-        DoMovement(Vector2.Normalize(new Vector2(1, 0)));
     }
 
     private void MoveAnalog()
