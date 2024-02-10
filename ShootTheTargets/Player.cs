@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -12,12 +13,14 @@ public class Player
     public Vector2 Pos;
     public Dictionary<string, Action> ActionMap;
     private readonly int _speed;
+    private bool _didShoot;
 
     public Player(Texture2D sprite = default, Vector2 pos = default)
     {
         Sprite = sprite;
         Pos = pos;
         _speed = 150;
+        _didShoot = false;
 
         ActionMap = new Dictionary<string, Action>
         {
@@ -42,8 +45,12 @@ public class Player
         Pos += _speed * Game1.Delta * direction;
     }
 
-    private void Shoot()
+    private async void Shoot()
     {
+        if (_didShoot) return;
         Console.WriteLine("Shot!");
+        _didShoot = true;
+        await Task.Delay(500);
+        _didShoot = false;
     }
 }
