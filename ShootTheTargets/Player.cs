@@ -11,7 +11,7 @@ public class Player
 {
     public Texture2D Sprite;
     public Vector2 Pos;
-    public Dictionary<string, Action> ActionMap;
+    public Dictionary<string, Action> MoveAnalogActionMap, MoveDiscreetActionMap;
     private readonly int _speed;
     private bool _didShoot;
 
@@ -22,13 +22,18 @@ public class Player
         _speed = 150;
         _didShoot = false;
 
-        ActionMap = new Dictionary<string, Action>
+        MoveAnalogActionMap = new Dictionary<string, Action>
+        {
+            { "MoveAnalog", MoveAnalog },
+            { "PrimaryAction", Shoot }
+        };
+        
+        MoveDiscreetActionMap = new Dictionary<string, Action>
         {
             { "Up", () => DoMovement(new Vector2(0, -1)) },
             { "Down", () => DoMovement(new Vector2(0, 1)) },
             { "Left", () => DoMovement(new Vector2(-1, 0)) },
             { "Right", () => DoMovement(new Vector2(1, 0)) },
-            { "MoveAnalog", MoveAnalog },
             { "PrimaryAction", Shoot }
         };
     }

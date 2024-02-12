@@ -57,7 +57,9 @@ public class Game1 : Game
             Keyboard.GetState().IsKeyDown(Keys.Escape))
             Exit();
 
-        _inputHandler.InputByActionMap(_player.ActionMap);
+        _inputHandler.InputByActionMap(_inputHandler.IsActionTriggered("MoveAnalog")
+            ? _player.MoveAnalogActionMap
+            : _player.MoveDiscreetActionMap);
 
         base.Update(gameTime);
     }
