@@ -11,7 +11,7 @@ public class Player
 {
     public Texture2D Sprite;
     public Vector2 Pos;
-    public Dictionary<string, Action> MoveAnalogActionMap, MoveDiscreetActionMap;
+    public readonly Dictionary<string, Action> MoveAnalogActionMap, MoveDiscreetActionMap;
     private readonly int _speed;
     private bool _didShoot;
 

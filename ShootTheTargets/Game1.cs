@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -22,12 +23,17 @@ public class Game1 : Game
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
     private Player _player;
+    private List<Target> _targets;
+    private Texture2D _targetSprite;
+    private Random _rnd;
 
     public static float Delta { get; private set; }
 
     public Game1()
     {
         _inputHandler = new InputHandler.InputHandler(_inputMap);
+        _targets = new List<Target>();
+        _rnd = new Random();
         _graphics = new GraphicsDeviceManager(this);
         Content.RootDirectory = "Content";
         IsMouseVisible = true;
@@ -47,6 +53,7 @@ public class Game1 : Game
         _spriteBatch = new SpriteBatch(GraphicsDevice);
 
         _player.Sprite = Content.Load<Texture2D>("images/crosshairs");
+        _targetSprite = Content.Load<Texture2D>("images/target");
     }
 
     protected override void Update(GameTime gameTime)
@@ -56,6 +63,11 @@ public class Game1 : Game
         if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed ||
             Keyboard.GetState().IsKeyDown(Keys.Escape))
             Exit();
+
+        if (_rnd.Next(200) < 1)
+        {
+            _targets.Add(new Target(new Vector2(_rnd.Next(600), _rnd.Next(480))));
+        }
 
         _inputHandler.InputByActionMap(_inputHandler.IsActionTriggered("MoveAnalog")
             ? _player.MoveAnalogActionMap
@@ -69,6 +81,10 @@ public class Game1 : Game
         GraphicsDevice.Clear(Color.CornflowerBlue);
         _spriteBatch.Begin();
 
+        foreach (var target in _targets)
+        {
+            _spriteBatch.Draw(_targetSprite, target.Pos, Color.White);
+        }
         _spriteBatch.Draw(_player.Sprite, _player.Pos, Color.White);
 
         _spriteBatch.End();
