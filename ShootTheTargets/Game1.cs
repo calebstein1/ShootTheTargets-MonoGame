@@ -19,11 +19,11 @@ public class Game1 : Game
         { "PrimaryAction", new List<IInputAction> { new KeyboardAction(Keys.Space), new MouseClickedAction("Left"), new GamePadAction(Buttons.A), new GamePadAction(Buttons.B) } },
     };
 
+    public static List<Target> Targets;
     private readonly InputHandler.InputHandler _inputHandler;
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
     private Player _player;
-    private List<Target> _targets;
     private Texture2D _targetSprite;
     private Random _rnd;
 
@@ -32,7 +32,7 @@ public class Game1 : Game
     public Game1()
     {
         _inputHandler = new InputHandler.InputHandler(_inputMap);
-        _targets = new List<Target>();
+        Targets = new List<Target>();
         _rnd = new Random();
         _graphics = new GraphicsDeviceManager(this);
         Content.RootDirectory = "Content";
@@ -66,7 +66,7 @@ public class Game1 : Game
 
         if (_rnd.Next(200) < 1)
         {
-            _targets.Add(new Target(new Vector2(_rnd.Next(600), _rnd.Next(480))));
+            Targets.Add(new Target(new Vector2(_rnd.Next(600), _rnd.Next(480))));
         }
 
         _inputHandler.InputByActionMap(_inputHandler.IsActionTriggered("MoveAnalog")
@@ -81,7 +81,7 @@ public class Game1 : Game
         GraphicsDevice.Clear(Color.CornflowerBlue);
         _spriteBatch.Begin();
 
-        foreach (var target in _targets)
+        foreach (var target in Targets)
         {
             _spriteBatch.Draw(_targetSprite, target.Pos, Color.White);
         }
