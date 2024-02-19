@@ -19,13 +19,13 @@ public class Game1 : Game
         { "PrimaryAction", new List<IInputAction> { new KeyboardAction(Keys.Space), new MouseClickedAction("Left"), new GamePadAction(Buttons.A), new GamePadAction(Buttons.B) } },
     };
 
-    public static List<Target> Targets;
+    public static List<Target> Targets { get; private set; }
     private readonly InputHandler.InputHandler _inputHandler;
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
     private Player _player;
     private Texture2D _targetSprite;
-    private Random _rnd;
+    private readonly Random _rnd;
 
     public static float Delta { get; private set; }
 
@@ -65,9 +65,7 @@ public class Game1 : Game
             Exit();
 
         if (_rnd.Next(200) < 1)
-        {
             Targets.Add(new Target(new Vector2(_rnd.Next(600), _rnd.Next(480))));
-        }
 
         _inputHandler.InputByActionMap(_inputHandler.IsActionTriggered("MoveAnalog")
             ? _player.MoveAnalogActionMap
